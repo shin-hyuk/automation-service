@@ -2,6 +2,10 @@
 .env
 *.env
 
+# Service account credentials
+service-account.json
+**/service-account.json
+
 # Python
 __pycache__/
 *.py[cod]
