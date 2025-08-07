@@ -24,7 +24,15 @@ A general-purpose Flask API for collecting and storing any type of data with Sup
    # Edit env.yaml with your Supabase URL and API key
    ```
 
-3. **Deploy**:
+3. **VM Setup** (for background data collection):
+   ```bash
+   # Run automated setup script
+   chmod +x setup-vm-cron.sh
+   ./setup-vm-cron.sh
+   # Note the VM IP from output for next step
+   ```
+
+4. **Deploy**:
    ```bash
    gcloud run deploy data-collector \
      --source . \
