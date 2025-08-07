@@ -46,18 +46,9 @@ def submit_wealth_data():
             }), 400
         
         # Log the received data (be careful about logging sensitive data in production)
-        client_id = data.get('client_id', 'unknown')
-        logger.info(f"Received UTGL Gary wealth data for client: {client_id}")
+        logger.info(f"Received raw JSON data with {len(data)} fields")
         
-        # Validate required fields
-        required_fields = ['client_id', 'wealth_data']
-        missing_fields = [field for field in required_fields if field not in data]
-        
-        if missing_fields:
-            logger.warning(f"Missing required fields: {missing_fields}")
-            return jsonify({
-                'error': f'Missing required fields: {missing_fields}'
-            }), 400
+        # No field validation - accept any raw JSON data
         
         # Store data using database service
         try:
@@ -66,21 +57,19 @@ def submit_wealth_data():
             # Prepare success response
             response = {
                 'status': 'success',
-                'message': 'UTGL Gary wealth data received and stored successfully',
+                'message': 'Raw JSON data received and stored successfully',
                 'inserted_at': result['inserted_at'],
-                'client_id': client_id,
                 'processed_at': datetime.utcnow().isoformat(),
                 'data_summary': {
-                    'total_fields': len(data),
-                    'wealth_data_fields': len(data.get('wealth_data', {}))
+                    'total_fields': len(data)
                 }
             }
             
-            logger.info(f"Successfully processed wealth data for client: {client_id}")
+            logger.info(f"Successfully processed raw JSON data")
             return jsonify(response), 200
             
         except Exception as db_error:
-            logger.error(f"Database operation failed for client {client_id}: {str(db_error)}")
+            logger.error(f"Database operation failed: {str(db_error)}")
             return jsonify({
                 'error': 'Database operation failed',
                 'message': str(db_error)
@@ -99,21 +88,18 @@ def wealth_data_info():
     return jsonify({
         'endpoint': '/utgl-gary-wealth-data',
         'method': 'POST',
-        'description': 'Submit UTGL Gary wealth data',
+        'description': 'Submit UTGL Gary wealth data - accepts any raw JSON',
         'content_type': 'application/json',
-        'required_fields': ['client_id', 'wealth_data'],
+        'required_fields': 'None - accepts any JSON structure',
         'example_payload': {
-            'client_id': 'GARY001',
-            'wealth_data': {
-                'assets': 1500000,
-                'liabilities': 200000,
-                'net_worth': 1300000,
-                'investment_portfolio': {
-                    'stocks': 800000,
-                    'bonds': 300000,
-                    'real_estate': 400000
-                },
-                'timestamp': '2024-01-15T10:30:00Z'
-            }
+            'userId': '1686e05d-8170-4760-8b3e-6eafeda51a8e',
+            'accountId': '002-022-0692409',
+            'balances': {
+                'BTC': 9.999962,
+                'ETH': 274.5007128797566,
+                'HKD': 72193472.43
+            },
+            'positions': {},
+            'orders': []
         }
     }), 200
