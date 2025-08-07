@@ -47,6 +47,8 @@ def submit_wealth_data():
         
         # Log the received data (be careful about logging sensitive data in production)
         logger.info(f"Received raw JSON data with {len(data)} fields")
+        logger.info(f"DEBUG - Data type: {type(data)}")
+        logger.info(f"DEBUG - Data content preview: {str(data)[:200]}...")
         
         # No field validation - accept any raw JSON data
         

@@ -63,6 +63,9 @@ class DatabaseService:
                 'data': data
             }
             
+            # Debug: Log what we're about to insert
+            logger.info(f"DEBUG - Inserting record: {db_record}")
+            
             # Insert into database
             result = self.client.table('utgl_gary_wealth_records').insert(db_record).execute()
             
