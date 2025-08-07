@@ -15,16 +15,20 @@ class DatabaseService:
     
     def __init__(self):
         self.client: Optional[Client] = None
-        self._initialize_client()
+        self._initialized = False
     
     def _initialize_client(self) -> None:
-        """Initialize Supabase client"""
+        """Initialize Supabase client lazily"""
+        if self._initialized:
+            return
+            
         try:
             # Validate configuration
             config.validate_required_config()
             
             # Create Supabase client
             self.client = create_client(config.supabase_url, config.supabase_key)
+            self._initialized = True
             logger.info("Supabase client initialized successfully")
             
         except Exception as e:
@@ -44,6 +48,9 @@ class DatabaseService:
         Raises:
             Exception: If database operation fails
         """
+        # Initialize client if not done yet
+        self._initialize_client()
+        
         if not self.client:
             raise Exception("Database client not initialized")
         
@@ -83,6 +90,9 @@ class DatabaseService:
             Dictionary with health status
         """
         try:
+            # Initialize client if not done yet
+            self._initialize_client()
+            
             if not self.client:
                 return {'healthy': False, 'error': 'Client not initialized'}
             
