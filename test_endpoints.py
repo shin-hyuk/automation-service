@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Test script for Data Collector API endpoints
+Test script for Automation Service API endpoints
 Tests all available endpoints with the deployed Cloud Run URL
 """
 import requests
@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 load_dotenv('.env')
 
 # Configuration
-API_URL = os.getenv('API_URL', 'https://data-collector-601408578579.us-central1.run.app')
+API_URL = os.getenv('API_URL', 'https://automation-service-601408578579.us-central1.run.app')
 HEADERS = {'Content-Type': 'application/json'}
 
 def test_endpoint(method, endpoint, data=None, description=""):
@@ -51,7 +51,7 @@ def test_endpoint(method, endpoint, data=None, description=""):
 
 def run_all_tests():
     """Run all endpoint tests"""
-    print("🚀 Starting Data Collector API Tests")
+    print("🚀 Starting Automation Service API Tests")
     print(f"🎯 Target URL: {API_URL}")
     
     # Test 1: Root endpoint

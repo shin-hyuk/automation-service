@@ -1,6 +1,6 @@
-# Data Collector API
+# Automation Service
 
-A general-purpose Flask API for collecting and storing any type of data with Supabase integration.
+A comprehensive automation service for collecting, processing, and storing financial data with Supabase integration.
 
 ## 🚀 API Endpoints
 
@@ -34,7 +34,7 @@ A general-purpose Flask API for collecting and storing any type of data with Sup
 
 4. **Deploy**:
    ```bash
-   gcloud run deploy data-collector \
+   gcloud run deploy automation-service \
      --source . \
      --env-vars-file env.yaml \
      --platform managed \

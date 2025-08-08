@@ -1,6 +1,6 @@
 """
-Gary Wealth Data API
-A professional Flask API for handling UTGL Gary wealth data submissions
+Automation Service API
+A comprehensive automation service for collecting, processing, and storing financial data
 """
 import logging
 import os
@@ -75,9 +75,9 @@ def create_app() -> Flask:
     @app.route('/', methods=['GET'])
     def root():
         return jsonify({
-            'service': 'Data Collector API',
+            'service': 'Automation Service',
             'version': '1.0.0',
-            'description': 'General-purpose API for collecting and storing any type of data',
+            'description': 'Comprehensive automation service for financial data collection and processing',
             'current_projects': {
                 'gary_wealth': '/utgl-gary-wealth-data'
             },
@@ -88,7 +88,7 @@ def create_app() -> Flask:
             'note': 'More endpoints will be added for different data types'
         }), 200
     
-    logger.info(f"Data Collector API initialized in {config.environment} mode")
+    logger.info(f"Automation Service initialized in {config.environment} mode")
     return app
 
 # Create app instance
@@ -104,7 +104,7 @@ if __name__ == '__main__':
         exit(1)
     
     # Run the application
-    logger.info(f"Starting Data Collector API on port {config.port}")
+    logger.info(f"Starting Automation Service on port {config.port}")
     app.run(
         host='0.0.0.0',
         port=config.port,

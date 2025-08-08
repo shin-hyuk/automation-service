@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Gary Wealth Data Collector Setup
+# Automation Service Setup
 # Sets up cron job to run gary_wealth.py every hour
 
 set -e
 
-echo "🤖 Setting up Gary Wealth Data Collection Service..."
+echo "🤖 Setting up Automation Service..."
 
 # Get current directory
 REPO_DIR=$(pwd)
@@ -48,7 +48,7 @@ mkdir -p logs
 chmod 600 "$SERVICE_ACCOUNT_PATH"
 
 # Get current crontab and add our job
-echo "⏰ Setting up cron job for Gary Wealth Data Collection..."
+echo "⏰ Setting up cron job for Automation Service..."
 
 # Create temporary crontab file
 crontab -l > temp_crontab 2>/dev/null || touch temp_crontab
@@ -59,7 +59,7 @@ grep -v "gary_wealth" temp_crontab > temp_crontab_clean || touch temp_crontab_cl
 # Add new cron job (every hour at minute 0)
 cat >> temp_crontab_clean << EOF
 
-# Gary Wealth Data Collection - runs every hour
+# Automation Service - runs every hour
 0 * * * * cd $REPO_DIR && $REPO_DIR/venv/bin/python $SCRIPT_PATH >> logs/gary_wealth.log 2>&1
 
 EOF
@@ -82,7 +82,7 @@ sudo systemctl start cron
 sudo systemctl status cron --no-pager
 
 echo ""
-echo "🎉 Gary Wealth Data Collection Setup Complete!"
+echo "🎉 Automation Service Setup Complete!"
 echo ""
 echo "📋 Setup Summary:"
 echo "   • Script Location: $SCRIPT_PATH"
@@ -99,4 +99,4 @@ echo ""
 echo "⏰ Current Cron Jobs:"
 crontab -l | grep -E "(gary_wealth|^#|^$)" || echo "   No cron jobs found"
 echo ""
-echo "💡 The script will run every hour and collect Gary wealth data automatically!"
+echo "💡 The automation service will run every hour and collect wealth data automatically!"
