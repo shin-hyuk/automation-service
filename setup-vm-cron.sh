@@ -68,15 +68,6 @@ EOF
 crontab temp_crontab_clean
 rm temp_crontab temp_crontab_clean
 
-# Test the script
-echo "🧪 Testing gary_wealth.py script..."
-cd "$REPO_DIR"
-source venv/bin/activate
-echo "🔍 Testing with Python: $(which python)"
-echo "🔍 Testing with virtual env: $VIRTUAL_ENV"
-timeout 30s python "$SCRIPT_PATH" || echo "⚠️  Script test completed (may have timed out)"
-deactivate
-
 # Check if cron service is running
 echo "🔧 Ensuring cron service is running..."
 sudo systemctl enable cron
